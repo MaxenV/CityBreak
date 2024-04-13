@@ -1,0 +1,7 @@
+pip==24.0
+rasa==3.6.19
+matplotlib==3.5.3
+google-auth==2.29.0
+tensorflow==2.12.0
+numpy==1.23.5
+pydot==1.4.2

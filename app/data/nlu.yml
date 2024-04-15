@@ -35,3 +35,12 @@ nlu:
       - Gdzie znajduje się [Kraków](city)
       - Gdzie leży miasto [Wrocław](city)
       - Gdzie znajduje się miaasto [Białystok](city)
+
+  - intent: city_population
+    examples: |
+      - Ile mieszkańców ma [Warszawa](city)
+      - Ile ludzi mieszka w [Lublinie](city)
+      - Ile mieszkańców ma [Kraków](city)
+      - Ile ludzi mieszka we [Wrocławiu](city)
+      - Ile mieszkańców ma [Białystok](city)
+      - Populacja [Gdańska](city)

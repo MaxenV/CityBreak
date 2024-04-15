@@ -20,3 +20,8 @@ rules:
     steps:
       - intent: city_location
       - action: action_city_location
+
+  - rule: Say what is the population of the city
+    steps:
+      - intent: city_population
+      - action: action_city_population

@@ -13,6 +13,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
 from . import GUSService
+from . import wordManip as wp
 
 
 class ActionCityPopulation(Action):
@@ -29,12 +30,25 @@ class ActionCityPopulation(Action):
 
         gusService = GUSService.GUSService()
         city = tracker.get_slot("city")
-        unitId = gusService.getUnitIdFromCity(city)
-        if unitId is None:
-            dispatcher.utter_message(text=f"Nie znaleziono miasta: {city}")
+        try:
+            unitId = gusService.getUnitIdFromCity(city)
+            population = gusService.getPopulationOfCity(unitId)
+
+        except Exception as e:
+            if len(e.args) > 1 and e.args[1] == "connectionError":
+                dispatcher.utter_message(
+                    text=f"Problem z połączeniem z serwerem GUS. Spróbuj ponownie później."
+                )
+                return []
+
+            print(e)
+            nomCity = wp.WordManip().to_nominative(city)
+            dispatcher.utter_message(
+                text=f"Nie udało się pobrać danych o populacji miasta: {nomCity}"
+            )
             return []
+
         print("Find unitId: ", unitId)  # DEBUG
-        population = gusService.getPopulationOfCity(unitId)
 
         dispatcher.utter_message(text=f"Populacja miasta: {city} wynosi: {population}")
         return []

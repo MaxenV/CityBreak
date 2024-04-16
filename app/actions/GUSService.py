@@ -20,14 +20,16 @@ class GUSService:
             "unit-level": "6",
             "page-size": "99",
         }
-        response = requests.get(url, params=params)
 
-        dataUnit = self.__checkResponse(response)
+        dataUnit = self.__getDataResponse(url, params)
 
         if len(dataUnit["results"]) == 0:
-            raise Exception(f"Nie znaleziono miasta: {nomCity}")
+            raise Exception(f"No results")
         else:
             res = self.__readCityId(dataUnit["results"], nomCity)
+            if res is None:
+                raise Exception(f"The search was not matched")
+
             return res
 
     def getPopulationOfCity(self, unitId):
@@ -40,11 +42,10 @@ class GUSService:
             "page-size": "99",
         }
 
-        response = requests.get(url, params=params)
-        dataPopulation = self.__checkResponse(response)
+        dataPopulation = self.__getDataResponse(url, params)
 
         if len(dataPopulation["results"]) == 0:
-            raise Exception(f"Nie znaleziono miasta o id: {unitId}")
+            raise Exception(f"City not found.")
         else:
             return self.__readCityPopulation(dataPopulation["results"], unitId)
 
@@ -95,8 +96,16 @@ class GUSService:
             return result[0]["val"]
         return None
 
-    def __checkResponse(self, response):
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(f"Błąd żądania: {response.status_code}")
+    def __getDataResponse(self, url, params):
+        try:
+            response = requests.get(url, params=params)
+            if response.status_code == 200:
+                return response.json()
+            else:
+                raise Exception(
+                    f"Response error: {response.status_code}", "connectionError"
+                )
+
+        except requests.exceptions.RequestException as e:
+            print("Connection Error: ", e)
+            raise Exception(f"Response error", "connectionError")

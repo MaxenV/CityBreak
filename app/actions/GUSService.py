@@ -49,8 +49,13 @@ class GUSService:
 
     def __firstCityId(self, data, regex):
         for item in data:
-            if re.search(regex, item["name"].lower()):
-                return item["id"]
+            if item["id"][-2] != "0" and item["id"][-1] != "0":
+                if len(item["name"].split(" ")) > 3 and re.search(
+                    regex, item["name"].lower()
+                ):
+                    return item["id"]
+                elif len(item["name"].split(" ")) <= 3:
+                    return item["id"]
         return None
 
     def __firstCityPopulation(self, data, unitId):

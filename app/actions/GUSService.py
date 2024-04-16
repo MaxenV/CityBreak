@@ -1,17 +1,21 @@
 import requests
 import re
+from . import wordManip as wp
 
 
 class GUSService:
     def __init__(self, apiKey=""):
+        self.word_manip = wp.WordManip()
+
         if apiKey:
             self.apiKey = apiKey
             print("API Key is set")
 
     def getUnitIdFromCity(self, cityName):
         url = f"https://bdl.stat.gov.pl/api/v1/units/search"
+        nomCity = self.word_manip.to_nominative(cityName).lower()
         params = {
-            "name": cityName,
+            "name": nomCity,
             "format": "json",
             "unit-level": "6",
             "page-size": "40",
@@ -24,7 +28,8 @@ class GUSService:
         if len(dataUnit["results"]) == 0:
             raise Exception(f"Nie znaleziono miasta {cityName}")
         else:
-            return self.__firstCityId(dataUnit["results"], regex)
+            res = self.__firstCityId(dataUnit["results"], regex)
+            return res
 
     def getPopulationOfCity(self, unitId):
         url = "https://bdl.stat.gov.pl/api/v1/data/by-variable/72305"

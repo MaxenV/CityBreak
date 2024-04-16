@@ -54,18 +54,14 @@ class GUSService:
             if not re.search(f"(^| |.){cityName}($| )", lowerName):
                 print("No city: ", item["name"])  # DEBUG
                 continue
-
-            if len(data) == 1:
-                return item["id"]
-
-            elif item["id"][-2] == "0" and item["id"][-1] == "0":
-                print("City 00: ", lowerName)  # DEBUG
-                if re.search("powiat m. ", lowerName):
+            if item["level"] == 6:
+                if len(data) == 1:
                     return item["id"]
+                elif item["kind"] in ["1", "4"]:
+                    if not re.search(" do ", lowerName):
+                        return item["id"]
             else:
-                print("City long: ", lowerName)  # DEBUG
-                if re.search("miasto$", lowerName):
-                    return item["id"]
+                continue
 
         return None
 

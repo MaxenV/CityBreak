@@ -21,22 +21,23 @@ class GUSService:
             "page-size": "40",
         }
         response = requests.get(url, params=params)
-        regex = "m.st.*warszawa.*od|(miasto$)"
 
         dataUnit = self.__checkResponse(response)
 
         if len(dataUnit["results"]) == 0:
-            raise Exception(f"Nie znaleziono miasta {cityName}")
+            raise Exception(f"Nie znaleziono miasta: {nomCity}")
         else:
-            res = self.__firstCityId(dataUnit["results"], regex)
+            res = self.__firstCityId(dataUnit["results"], nomCity)
             return res
 
     def getPopulationOfCity(self, unitId):
+        print("UnitId: ", unitId)  # DEBUG
         url = "https://bdl.stat.gov.pl/api/v1/data/by-variable/72305"
         params = {
             "unit-level": "6",
             "unit-parent-id": unitId,
             "format": "json",
+            "page-size": "99",
         }
 
         response = requests.get(url, params=params)
@@ -47,23 +48,55 @@ class GUSService:
         else:
             return self.__firstCityPopulation(dataPopulation["results"], unitId)
 
-    def __firstCityId(self, data, regex):
+    def __firstCityId(self, data, cityName):
         for item in data:
-            if item["id"][-2] != "0" and item["id"][-1] != "0":
-                if len(item["name"].split(" ")) > 3 and re.search(
-                    regex, item["name"].lower()
-                ):
+            lowerName = item["name"].lower()
+            if not re.search(f"(^| |.){cityName}($| )", lowerName):
+                print("No city: ", item["name"])  # DEBUG
+                continue
+
+            if len(data) == 1:
+                return item["id"]
+
+            elif item["id"][-2] == "0" and item["id"][-1] == "0":
+                print("City 00: ", lowerName)  # DEBUG
+                if re.search("powiat m. ", lowerName):
                     return item["id"]
-                elif len(item["name"].split(" ")) <= 3:
+            else:
+                print("City long: ", lowerName)  # DEBUG
+                if re.search("miasto$", lowerName):
                     return item["id"]
+
         return None
 
     def __firstCityPopulation(self, data, unitId):
+        result = None
         for item in data:
-            if unitId == item["id"]:
+            if len(data) == 1:
+                print("One item: ", item["values"])  # DEBUG
                 result = item["values"]
-                result.reverse()
-                return result[0]["val"]
+                break
+            elif not unitId[-1] == "0":
+                print("UnitId: ", unitId)  # DEBUG
+                if unitId == item["id"]:
+                    result = item["values"]
+                    break
+            else:
+                print("Item: ", item)  # DEBUG
+
+                if item["id"][-1] == "1":
+                    result = item["values"]
+                    break
+                if re.search("miasto$", item["name"].lower()):
+                    result = item["values"]
+                    break
+                else:
+                    result = item["values"]
+
+        print("Correct: ", result)  # DEBUG
+        if result:
+            result.reverse()
+            return result[0]["val"]
         return None
 
     def __checkResponse(self, response):

@@ -18,7 +18,7 @@ class GUSService:
             "name": nomCity,
             "format": "json",
             "unit-level": "6",
-            "page-size": "40",
+            "page-size": "99",
         }
         response = requests.get(url, params=params)
 
@@ -27,7 +27,7 @@ class GUSService:
         if len(dataUnit["results"]) == 0:
             raise Exception(f"Nie znaleziono miasta: {nomCity}")
         else:
-            res = self.__firstCityId(dataUnit["results"], nomCity)
+            res = self.__readCityId(dataUnit["results"], nomCity)
             return res
 
     def getPopulationOfCity(self, unitId):
@@ -46,9 +46,9 @@ class GUSService:
         if len(dataPopulation["results"]) == 0:
             raise Exception(f"Nie znaleziono miasta o id: {unitId}")
         else:
-            return self.__firstCityPopulation(dataPopulation["results"], unitId)
+            return self.__readCityPopulation(dataPopulation["results"], unitId)
 
-    def __firstCityId(self, data, cityName):
+    def __readCityId(self, data, cityName):
         for item in data:
             lowerName = item["name"].lower()
             if not re.search(f"(^| |.){cityName}($| )", lowerName):
@@ -69,7 +69,7 @@ class GUSService:
 
         return None
 
-    def __firstCityPopulation(self, data, unitId):
+    def __readCityPopulation(self, data, unitId):
         result = None
         for item in data:
             if len(data) == 1:

@@ -10,4 +10,4 @@ class WordManip:
         for i in analysis:
             if "nazwa_geograficzna" in i[-1][-2]:
                 return i[-1][1].split(":")[0]
-        return None
+        return word

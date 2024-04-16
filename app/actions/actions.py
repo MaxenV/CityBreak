@@ -33,6 +33,7 @@ class ActionCityPopulation(Action):
         if unitId is None:
             dispatcher.utter_message(text=f"Nie znaleziono miasta: {city}")
             return []
+        print("Find unitId: ", unitId)  # DEBUG
         population = gusService.getPopulationOfCity(unitId)
 
         dispatcher.utter_message(text=f"Populacja miasta: {city} wynosi: {population}")

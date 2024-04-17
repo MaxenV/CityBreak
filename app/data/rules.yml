@@ -17,11 +17,17 @@ rules:
       - action: utter_iamabot
 
   - rule: Say where city is located
+    condition:
+      - slot_was_set:
+          - city: true
     steps:
       - intent: city_location
       - action: action_city_location
 
   - rule: Say what is the population of the city
+    condition:
+      - slot_was_set:
+          - city: true
     steps:
       - intent: city_population
       - action: action_city_population

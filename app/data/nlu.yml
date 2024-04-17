@@ -49,3 +49,40 @@ nlu:
       - Ile ludzi mieszka we [Wrocławiu](city)
       - Ile mieszkańców ma [Białystok](city)
       - Populacja [Gdańska](city)
+
+  - intent: context_population
+    examples: |
+      - Ile mieszkańców ma to miasto
+      - Ile ludzi mieszka w tym mieście
+      - A ile ma mieszkańców
+      - Ile ludzi tam mieszka
+      - A ile ma populacji
+
+  - intent: set_city
+    examples: |
+      - [Bydgoszcz](city)
+      - [Gdynia](city)
+      - [Kielce](city)
+      - [Olsztyn](city)
+      - [Opole](city)
+      - [Warszawa](city)
+      - [Lublin](city)
+      - [Kraków](city)
+      - [Wrocław](city)
+      - Chodzi mi o [Kielce](city)
+      - Podaj informacje o [Olsztynie](city)
+      - Interesuje mnie [Opole](city)
+
+  - intent: context_location
+    examples: |
+      - A gdzie to jest
+      - Gdzie to leży
+      - W jakim miejscu to jest
+      - W jakim województwie to jest
+      - W jakim miejscu to się znajduje
+      - W jakim województwie leży to miasto
+      - W jakim miejscu znajduje się to miasto
+      - W jakim województwie jest to miasto
+      - Gdzie jest to miasto
+      - A gdzie to miasto jest
+      - A gdzie znajduje się to miasto

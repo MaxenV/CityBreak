@@ -49,3 +49,10 @@ nlu:
       - Ile ludzi mieszka we [Wrocławiu](city)
       - Ile mieszkańców ma [Białystok](city)
       - Populacja [Gdańska](city)
+
+  - intent: context_population
+    examples: |
+      - Ile mieszkańców ma to miasto
+      - Ile ludzi mieszka w tym mieście
+      - A ile ma mieszkańców
+      - Ile ludzi tam mieszka

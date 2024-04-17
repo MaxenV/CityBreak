@@ -25,3 +25,12 @@ rules:
     steps:
       - intent: city_population
       - action: action_city_population
+
+  - rule: Say what is the population of the city from context when city is set
+    condition:
+      - slot_was_set:
+          - city: true
+    steps:
+      - intent: context_population
+      - action: action_city_population
+      - action: action_listen

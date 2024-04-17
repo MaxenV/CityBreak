@@ -30,6 +30,10 @@ class ActionCityPopulation(Action):
 
         gusService = GUSService.GUSService()
         city = tracker.get_slot("city")
+
+        if city is None:
+            dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
+            return []
         try:
             unitId = gusService.getUnitIdFromCity(city)
             population = gusService.getPopulationOfCity(unitId)

@@ -6,6 +6,7 @@ intents:
   - bot_challenge
   - city_location
   - city_population
+  - context_population
 
 entities:
   - city
@@ -18,6 +19,11 @@ slots:
       - type: from_entity
         entity: city
 
+forms:
+  city_form:
+    required_slots:
+      - city
+
 responses:
   utter_greet:
     - text: "Witam, w czym mogę pomóc?"
@@ -27,6 +33,9 @@ responses:
 
   utter_iamabot:
     - text: "Jestem botem CityBreak zbudowanym w Rasa. \nMożesz mi zadawać pytania dotyczące miast w Polsce."
+
+  utter_ask_city:
+    - text: "O jakim mieście chcesz się czegoś dowiedzieć?"
 
 session_config:
   session_expiration_time: 60

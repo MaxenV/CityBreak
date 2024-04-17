@@ -32,6 +32,23 @@ class GUSService:
 
             return res
 
+    def getProvinceFromUnitId(self, unitId):
+        provinceId = unitId[:4] + ("0" * len(unitId[4:]))
+
+        url = f"https://bdl.stat.gov.pl/api/v1/units/{provinceId}"
+        dataUnit = self.__getDataResponse(
+            url,
+            {
+                "format": "json",
+            },
+        )
+
+        print("Type DataUnit: ", type(dataUnit))  # DEBUG
+        if "errors" in dataUnit:
+            raise Exception(f"Province not found.")
+        else:
+            return self.__normalizeProvinceName(dataUnit["name"])
+
     def getPopulationOfCity(self, unitId):
         print("UnitId: ", unitId)  # DEBUG
         url = "https://bdl.stat.gov.pl/api/v1/data/by-variable/72305"
@@ -109,3 +126,6 @@ class GUSService:
         except requests.exceptions.RequestException as e:
             print("Connection Error: ", e)
             raise Exception(f"Response error", "connectionError")
+
+    def __normalizeProvinceName(self, name):
+        return name.lower().replace("województwo ", "")[:-1] + "m"

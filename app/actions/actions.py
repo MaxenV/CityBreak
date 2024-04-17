@@ -52,3 +52,44 @@ class ActionCityPopulation(Action):
 
         dispatcher.utter_message(text=f"Populacja miasta: {city} wynosi: {population}")
         return []
+
+
+class ActionCityLocation(Action):
+
+    def name(self) -> Text:
+        return "action_city_location"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        city = tracker.get_slot("city")
+        nomCity = wp.WordManip().to_nominative(city)
+        gusService = GUSService.GUSService()
+
+        try:
+            unitId = gusService.getUnitIdFromCity(city)
+            print("UnitId: ", unitId)  # DEBUG
+            province = gusService.getProvinceFromUnitId(unitId)
+            print("Province: ", province)  # DEBUG
+
+        except Exception as e:
+            if len(e.args) > 1 and e.args[1] == "connectionError":
+                dispatcher.utter_message(
+                    text=f"Problem z połączeniem z serwerem GUS. Spróbuj ponownie później."
+                )
+                return []
+
+            print(e)
+            dispatcher.utter_message(
+                text=f"Nie udało się pobrać danych o lokalizacji miasta: {nomCity}"
+            )
+            return []
+
+        dispatcher.utter_message(
+            text=f"Miasto: {nomCity} znajduje się w województwie {province}"
+        )
+        return []

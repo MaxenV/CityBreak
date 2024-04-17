@@ -35,6 +35,11 @@ nlu:
       - Gdzie znajduje się [Kraków](city)
       - Gdzie leży miasto [Wrocław](city)
       - Gdzie znajduje się miaasto [Białystok](city)
+      - Lokalizacja [Gdańska](city)
+      - W jakim miejscu znajduje się [Poznań](city)
+      - W jakim województwie jest [Katowice](city)
+      - W jakim województwie znajduje się [Łódź](city)
+      - W jakim województwie jest [Szczecin](city)
 
   - intent: city_population
     examples: |

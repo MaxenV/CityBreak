@@ -56,3 +56,18 @@ nlu:
       - Ile ludzi mieszka w tym mieście
       - A ile ma mieszkańców
       - Ile ludzi tam mieszka
+
+  - intent: set_city
+    examples: |
+      - [Bydgoszcz](city)
+      - [Gdynia](city)
+      - [Kielce](city)
+      - [Olsztyn](city)
+      - [Opole](city)
+      - [Warszawa](city)
+      - [Lublin](city)
+      - [Kraków](city)
+      - [Wrocław](city)
+      - Chodzi mi o [Kielce](city)
+      - Podaj informacje o [Olsztynie](city)
+      - Interesuje mnie [Opole](city)

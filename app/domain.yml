@@ -7,6 +7,7 @@ intents:
   - city_location
   - city_population
   - context_population
+  - set_city
 
 entities:
   - city
@@ -18,11 +19,16 @@ slots:
     mappings:
       - type: from_entity
         entity: city
-
-forms:
-  city_form:
-    required_slots:
-      - city
+  lastly_operation:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        intent: context_population
+        value: "context_population"
+      - type: from_intent
+        intent: city_population
+        value: ""
 
 responses:
   utter_greet:

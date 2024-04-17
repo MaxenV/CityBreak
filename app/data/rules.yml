@@ -34,6 +34,14 @@ rules:
       - intent: context_population
       - action: action_city_population
 
+  - rule: Say what is the location of the city from context when city is set
+    condition:
+      - slot_was_set:
+          - city: true
+    steps:
+      - intent: context_location
+      - action: action_city_location
+
   - rule: Say what is the population of the city from context when city is not set
     condition:
       - slot_was_set:
@@ -42,11 +50,19 @@ rules:
       - intent: context_population
       - action: utter_ask_city
 
+  - rule: Ask for city name when user want to know location of the city
+    condition:
+      - slot_was_set:
+          - city: null
+    steps:
+      - intent: context_location
+      - action: utter_ask_city
+
   - rule: Show population of the city after setting city
     condition:
       - slot_was_set:
           - city: true
-          - lastly_operation: "context_population"
+          - lastly_operation: true
     steps:
       - intent: set_city
-      - action: action_city_population
+      - action: action_answer_context

@@ -7,6 +7,7 @@ intents:
   - city_location
   - city_population
   - context_population
+  - context_location
   - set_city
 
 entities:
@@ -26,6 +27,9 @@ slots:
       - type: from_intent
         intent: context_population
         value: "context_population"
+      - type: from_intent
+        intent: context_location
+        value: "context_location"
       - type: from_intent
         intent: city_population
         value: ""
@@ -50,3 +54,4 @@ session_config:
 actions:
   - action_city_population
   - action_city_location
+  - action_answer_context

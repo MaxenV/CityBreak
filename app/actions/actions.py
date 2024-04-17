@@ -35,8 +35,10 @@ class ActionCityPopulation(Action):
         if city is None:
             dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
             return []
+
+        nomCity = wp.WordManip().to_nominative(city)
         try:
-            unitId = gusService.getUnitIdFromCity(city)
+            unitId = gusService.getUnitIdFromCity(nomCity)
             population = gusService.getPopulationOfCity(unitId)
 
         except Exception as e:
@@ -47,7 +49,7 @@ class ActionCityPopulation(Action):
                 return []
 
             print(e)
-            nomCity = wp.WordManip().to_nominative(city)
+
             dispatcher.utter_message(
                 text=f"Nie udało się pobrać danych o populacji miasta: {nomCity}"
             )
@@ -55,7 +57,9 @@ class ActionCityPopulation(Action):
 
         print("Find unitId: ", unitId)  # DEBUG
 
-        dispatcher.utter_message(text=f"Populacja miasta: {city} wynosi: {population}")
+        dispatcher.utter_message(
+            text=f"Populacja miasta: {nomCity} wynosi: {population}"
+        )
         return [FollowupAction("action_listen")]
 
 
@@ -72,11 +76,15 @@ class ActionCityLocation(Action):
     ) -> List[Dict[Text, Any]]:
 
         city = tracker.get_slot("city")
-        nomCity = wp.WordManip().to_nominative(city)
         gusService = GUSService.GUSService()
 
+        if city is None:
+            dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
+            return []
+
+        nomCity = wp.WordManip().to_nominative(city)
         try:
-            unitId = gusService.getUnitIdFromCity(city)
+            unitId = gusService.getUnitIdFromCity(nomCity)
             print("UnitId: ", unitId)  # DEBUG
             province = gusService.getProvinceFromUnitId(unitId)
             print("Province: ", province)  # DEBUG

@@ -1,19 +1,16 @@
 import requests
 import re
-from . import wordManip as wp
 
 
 class GUSService:
     def __init__(self, apiKey=""):
-        self.word_manip = wp.WordManip()
 
         if apiKey:
             self.apiKey = apiKey
             print("API Key is set")
 
-    def getUnitIdFromCity(self, cityName):
+    def getUnitIdFromCity(self, nomCity):
         url = f"https://bdl.stat.gov.pl/api/v1/units/search"
-        nomCity = self.word_manip.to_nominative(cityName).lower()
         params = {
             "name": nomCity,
             "format": "json",

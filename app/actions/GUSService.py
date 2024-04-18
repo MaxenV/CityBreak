@@ -11,6 +11,7 @@ class GUSService:
 
     def getUnitIdFromCity(self, nomCity):
         url = f"https://bdl.stat.gov.pl/api/v1/units/search"
+        nomCity = nomCity.lower()
         params = {
             "name": nomCity,
             "format": "json",

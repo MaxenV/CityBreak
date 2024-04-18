@@ -58,7 +58,7 @@ class ActionCityPopulation(Action):
         print("Find unitId: ", unitId)  # DEBUG
 
         dispatcher.utter_message(
-            text=f"Populacja miasta: {nomCity} wynosi: {population}"
+            text=f"Populacja miasta {nomCity} wynosi: {population}"
         )
         return [FollowupAction("action_listen")]
 

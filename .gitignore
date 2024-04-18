@@ -1,3 +1,5 @@
 app/.rasa/cache
 __pycache__/
 models/
+.env
+story_graph.dot

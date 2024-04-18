@@ -1,0 +1,90 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hej
+      - cześć
+      - witam
+      - witaj
+      - dzień dobry
+      - siema
+      - siemka
+      - siemanko
+      - witam
+
+  - intent: goodbye
+    examples: |
+      - dowidzenia
+      - pa
+      - narazie
+      - do zobaczenia
+      - do widzenia
+
+  - intent: bot_challenge
+    examples: |
+      - czy jesteś botem?
+      - czy jesteś człowiekiem?
+      - czy rozmawiam z botem?
+      - czy rozmawiam z człowiekiem?
+
+  - intent: city_location
+    examples: |
+      - Gdzie jest [Warszawa](city)
+      - Gdzie leży [Lublin](city)
+      - Gdzie znajduje się [Kraków](city)
+      - Gdzie leży miasto [Wrocław](city)
+      - Gdzie znajduje się miaasto [Białystok](city)
+      - Lokalizacja [Gdańska](city)
+      - W jakim miejscu znajduje się [Poznań](city)
+      - W jakim województwie jest [Katowice](city)
+      - W jakim województwie znajduje się [Łódź](city)
+      - W jakim województwie jest [Szczecin](city)
+
+  - intent: city_population
+    examples: |
+      - Ile mieszkańców ma [Warszawa](city)
+      - Ile ludzi mieszka w [Lublinie](city)
+      - Ile mieszkańców ma [Kraków](city)
+      - Ile ludzi mieszka we [Wrocławiu](city)
+      - Ile mieszkańców ma [Białystok](city)
+      - Populacja [Gdańska](city)
+
+  - intent: context_population
+    examples: |
+      - Ile mieszkańców ma to miasto
+      - Ile ludzi mieszka w tym mieście
+      - A ile ma mieszkańców
+      - Ile ludzi tam mieszka
+      - A ile ma populacji
+
+  - intent: set_city
+    examples: |
+      - [Bydgoszcz](city)
+      - [Gdynia](city)
+      - [Kielce](city)
+      - [Olsztyn](city)
+      - [Opole](city)
+      - [Warszawa](city)
+      - [Lublin](city)
+      - [Kraków](city)
+      - [Wrocław](city)
+      - [Zamość](city)
+      - [Bielsko-Biała](city)
+      - Chodzi mi o [Kielce](city)
+      - Podaj informacje o [Olsztynie](city)
+      - Interesuje mnie [Opole](city)
+
+  - intent: context_location
+    examples: |
+      - A gdzie to jest
+      - Gdzie to leży
+      - W jakim miejscu to jest
+      - W jakim województwie to jest
+      - W jakim miejscu to się znajduje
+      - W jakim województwie leży to miasto
+      - W jakim miejscu znajduje się to miasto
+      - W jakim województwie jest to miasto
+      - Gdzie jest to miasto
+      - A gdzie to miasto jest
+      - A gdzie znajduje się to miasto

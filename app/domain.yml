@@ -1,0 +1,57 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - bot_challenge
+  - city_location
+  - city_population
+  - context_population
+  - context_location
+  - set_city
+
+entities:
+  - city
+
+slots:
+  city:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: city
+  lastly_operation:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_intent
+        intent: context_population
+        value: "context_population"
+      - type: from_intent
+        intent: context_location
+        value: "context_location"
+      - type: from_intent
+        intent: city_population
+        value: ""
+
+responses:
+  utter_greet:
+    - text: "Witam, w czym mogę pomóc?"
+
+  utter_goodbye:
+    - text: "Żegnam!"
+
+  utter_iamabot:
+    - text: "Jestem botem CityBreak zbudowanym w Rasa. \nMożesz mi zadawać pytania dotyczące miast w Polsce."
+
+  utter_ask_city:
+    - text: "Jakie miasto cię interesuje?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+actions:
+  - action_city_population
+  - action_city_location
+  - action_answer_context

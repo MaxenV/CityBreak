@@ -9,9 +9,11 @@ intents:
   - context_population
   - context_location
   - set_city
+  - compare_population
 
 entities:
   - city
+  - city2
 
 slots:
   city:
@@ -27,12 +29,29 @@ slots:
       - type: from_intent
         intent: context_population
         value: "context_population"
+
       - type: from_intent
         intent: context_location
         value: "context_location"
+
+      - type: from_intent
+        intent: compare_population
+        value: "compare_population"
+
       - type: from_intent
         intent: city_population
         value: ""
+
+  prev_city:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
+        action: action_city_location
+      - type: custom
+        action: action_city_population
+      - type: from_entity
+        entity: city2
 
 responses:
   utter_greet:
@@ -55,3 +74,4 @@ actions:
   - action_city_population
   - action_city_location
   - action_answer_context
+  - action_compare_population

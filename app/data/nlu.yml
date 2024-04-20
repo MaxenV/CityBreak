@@ -88,3 +88,15 @@ nlu:
       - Gdzie jest to miasto
       - A gdzie to miasto jest
       - A gdzie znajduje się to miasto
+
+  - intent: compare_population
+    examples: |
+      - A czy to wiecej niż [Warszawa](city)
+      - Czy jest to więcej niż [Lublin](city)
+      - Czy jest to więcej niż [Kraków](city)
+      - Czy to wiecej czy mniej niż [Kielce](city)?
+      - A czy [Olsztyn](city) ma więcej mieszkańców?
+      - Czy [Opole](city) ma więcej ludzi niż [Warszawa](city2)?
+      - Czy [Warszawa](city) ma więcej mieszkańców niż [Wrocław](city2)?
+      - A czy [Zamość](city) ma większą populacje
+      - A czy [Zamość](city) ma większą populacje niż [Bielsko-Biała](city2)

@@ -36,16 +36,15 @@ class ActionCityPopulation(Action):
             dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
             return []
 
-        nomCity = wp.WordManip().to_nominative(city)
+        nomCity = wp.to_nominative(city)
         try:
             unitId = gusService.getUnitIdFromCity(nomCity)
             population = gusService.getPopulationOfCity(unitId)
-            print("Find unitId: ", unitId)  # DEBUG
 
             dispatcher.utter_message(
                 text=f"Populacja miasta {nomCity} wynosi: {population}"
             )
-            return [FollowupAction("action_listen"), SlotSet("prev_city", nomCity)]
+            return []
 
         except Exception as e:
             if len(e.args) > 1 and e.args[1] == "connectionError":
@@ -60,6 +59,8 @@ class ActionCityPopulation(Action):
                 text=f"Nie udało się pobrać danych o populacji miasta: {nomCity}"
             )
             return []
+        finally:
+            print("=" * 10 + " END of ActionCityPopulation " + "=" * 10, end="\n\n")
 
 
 class ActionCityLocation(Action):
@@ -81,16 +82,14 @@ class ActionCityLocation(Action):
             dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
             return []
 
-        nomCity = wp.WordManip().to_nominative(city)
+        nomCity = wp.to_nominative(city)
         try:
             unitId = gusService.getUnitIdFromCity(nomCity)
-            print("UnitId: ", unitId)  # DEBUG
             province = gusService.getProvinceFromUnitId(unitId)
-            print("Province: ", province)  # DEBUG
             dispatcher.utter_message(
                 text=f"Miasto: {nomCity} znajduje się w województwie {province}"
             )
-            return [FollowupAction("action_listen"), SlotSet("prev_city", nomCity)]
+            return []
 
         except Exception as e:
             if len(e.args) > 1 and e.args[1] == "connectionError":
@@ -104,6 +103,8 @@ class ActionCityLocation(Action):
                 text=f"Nie udało się pobrać danych o lokalizacji miasta: {nomCity}"
             )
             return []
+        finally:
+            print("=" * 10 + " END of ActionCityLocation " + "=" * 10, end="\n\n")
 
 
 class ActionAnswerContext(Action):
@@ -161,8 +162,8 @@ class ActionComparePopulation(Action):
             dispatcher.utter_message(text="Podaj miasta do porównania.")
             return []
 
-        nomCity1 = wp.WordManip().to_nominative(city1)
-        nomCity2 = wp.WordManip().to_nominative(city2)
+        nomCity1 = wp.to_nominative(city1)
+        nomCity2 = wp.to_nominative(city2)
 
         try:
             unitId1 = gusService.getUnitIdFromCity(nomCity1)
@@ -182,7 +183,7 @@ class ActionComparePopulation(Action):
                 dispatcher.utter_message(
                     text=f"Populacja miasta {nomCity1} i {nomCity2} jest taka sama i wynosi {population1} osób."
                 )
-
+            return []
         except Exception as e:
             if len(e.args) > 1 and e.args[1] == "connectionError":
                 dispatcher.utter_message(
@@ -195,3 +196,20 @@ class ActionComparePopulation(Action):
                 text=f"Nie udało się pobrać danych o populacji miast: {nomCity1} i {nomCity2}"
             )
             return []
+        finally:
+            print("=" * 10 + " END of ActionComparePopulation " + "=" * 10, end="\n\n")
+
+
+class ActionSetPrevCity(Action):
+
+    def name(self) -> Text:
+        return "action_set_prev_city"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        city = tracker.get_slot("city")
+        return [SlotSet("prev_city", city)]

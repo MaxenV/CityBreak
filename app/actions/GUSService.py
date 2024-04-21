@@ -1,5 +1,6 @@
 import requests
 import re
+import json
 
 
 class GUSService:
@@ -28,6 +29,7 @@ class GUSService:
             if res is None:
                 raise Exception(f"The search was not matched")
 
+            print("UnitId: ", res)  # DEBUG
             return res
 
     def getProvinceFromUnitId(self, unitId):
@@ -41,14 +43,12 @@ class GUSService:
             },
         )
 
-        print("Type DataUnit: ", type(dataUnit))  # DEBUG
         if "errors" in dataUnit:
             raise Exception(f"Province not found.")
         else:
             return self.__normalizeProvinceName(dataUnit["name"])
 
     def getPopulationOfCity(self, unitId):
-        print("UnitId: ", unitId)  # DEBUG
         url = "https://bdl.stat.gov.pl/api/v1/data/by-variable/72305"
         params = {
             "unit-level": "6",
@@ -68,7 +68,7 @@ class GUSService:
         for item in data:
             lowerName = item["name"].lower()
             if not re.search(f"(^| |.){cityName}($| )", lowerName):
-                print("No city: ", item["name"])  # DEBUG
+                print("Not the city name: ", item["name"])  # DEBUG
                 continue
             if item["level"] == 6:
                 if len(data) == 1:
@@ -84,26 +84,23 @@ class GUSService:
     def __readCityPopulation(self, data, unitId):
         result = None
         for item in data:
+            print("Item: ", item)  # DEBUG
             if len(data) == 1:
-                print("One item: ", item["values"])  # DEBUG
                 result = item["values"]
                 break
             elif not unitId[-1] == "0":
-                print("UnitId: ", unitId)  # DEBUG
                 if unitId == item["id"]:
                     result = item["values"]
                     break
             else:
-                print("Item: ", item)  # DEBUG
-
                 if item["id"][-1] == "1":
                     result = item["values"]
                     break
                 if re.search("miasto$", item["name"].lower()):
                     result = item["values"]
                     break
-                else:
-                    result = item["values"]
+                # else:
+                #     result = item["values"]
 
         print("Correct: ", result)  # DEBUG
         if result:
@@ -117,8 +114,8 @@ class GUSService:
                 params["X-ClientId"] = self.apiKey
 
             response = requests.get(url, params=params)
-            print("Response: ", response.json())  # DEBUG
             if response.status_code == 200:
+                # print("Response: ", json.dumps(response.json(), indent=3))  # DEBUG
                 return response.json()
             else:
                 raise Exception(

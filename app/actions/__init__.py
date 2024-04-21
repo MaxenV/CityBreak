@@ -1,5 +1,6 @@
 import os
 from .GUSService import GUSService
+from .wordManip import WordManip
 
 # Get the GUSkey from environment variables
 GUSkey = os.getenv("GUSkey")
@@ -11,3 +12,7 @@ if GUSkey is None or GUSkey == "<your_api_key>":
 else:
     print("GUSkey is set in environment variables.")
     gusService = GUSService(apiKey=GUSkey)
+
+
+# Create an instance of WordManip
+wordManip = WordManip()

@@ -13,7 +13,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import FollowupAction, SlotSet
 
-from . import GUSService
+from . import gusService
 from . import wordManip as wp
 
 
@@ -29,7 +29,7 @@ class ActionCityPopulation(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        gusService = GUSService.GUSService()
+        # gusService = GUSService.GUSService()
         city = tracker.get_slot("city")
 
         if city is None:
@@ -75,7 +75,7 @@ class ActionCityLocation(Action):
     ) -> List[Dict[Text, Any]]:
 
         city = tracker.get_slot("city")
-        gusService = GUSService.GUSService()
+        # gusService = GUSService.GUSService()
 
         if city is None:
             dispatcher.utter_message(text="Jakie miasto Cię interesuje?")
@@ -153,7 +153,7 @@ class ActionComparePopulation(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        gusService = GUSService.GUSService()
+        # gusService = GUSService.GUSService()
         city1 = tracker.get_slot("prev_city")
         city2 = tracker.get_slot("city")
 

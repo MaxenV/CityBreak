@@ -113,7 +113,11 @@ class GUSService:
 
     def __getDataResponse(self, url, params):
         try:
+            if hasattr(self, "apiKey"):
+                params["X-ClientId"] = self.apiKey
+
             response = requests.get(url, params=params)
+            print("Response: ", response.json())  # DEBUG
             if response.status_code == 200:
                 return response.json()
             else:

@@ -6,3 +6,4 @@ tensorflow==2.12.0
 numpy==1.23.5
 pydot==1.4.2
 morfeusz2==1.99.8
+google-api-python-client==2.126.0

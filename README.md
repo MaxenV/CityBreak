@@ -33,6 +33,14 @@ docker build -t local/citybreak .
 
 ### Run the Docker Container
 
+If you don't have .env file with keys
+
+```
+docker run --rm -dt -v ./app:/usr/src/app --name CityBreak local/citybreak
+```
+
+If you have at least one api key in .env file use
+
 ```
 docker run --rm -dt --env-file .env  -v ./app:/usr/src/app --name CityBreak local/citybreak
 ```

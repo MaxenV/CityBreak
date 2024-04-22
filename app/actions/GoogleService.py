@@ -19,3 +19,20 @@ class GoogleService:
             return response
         except Exception as e:
             raise Exception(f"Cannot get google response: {e}")
+
+    def getInterestingPlace(self, nomName, amount=3):
+        response = self.askGoogle("Lista najlepszych miejsc do zwiedzania " + nomName)
+        result = []
+        for i in range(amount):
+            keys = response["items"][i].keys()
+            if "link" not in keys or "title" not in keys:
+                amount += 1
+                continue
+            else:
+                result.append(
+                    {
+                        "url": response["items"][i]["link"],
+                        "title": response["items"][i]["title"],
+                    }
+                )
+        return result

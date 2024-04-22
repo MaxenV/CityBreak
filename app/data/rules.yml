@@ -90,3 +90,12 @@ rules:
     steps:
       - intent: compare_population
       - action: utter_ask_city
+
+  # Interesting places
+  - rule: Show interesting places when city is set
+    condition:
+      - slot_was_set:
+          - city: true
+    steps:
+      - intent: interesting_places
+      - action: action_interesting_places

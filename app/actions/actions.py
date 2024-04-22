@@ -15,6 +15,7 @@ from rasa_sdk.events import FollowupAction, SlotSet
 
 from . import gusService
 from . import wordManip as wp
+from . import googleService
 
 
 class ActionCityPopulation(Action):
@@ -198,6 +199,54 @@ class ActionComparePopulation(Action):
             return []
         finally:
             print("=" * 10 + " END of ActionComparePopulation " + "=" * 10, end="\n\n")
+
+
+class ActionInterestingPlace(Action):
+
+    def name(self) -> Text:
+        return "action_interesting_places"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        if googleService is None:
+            dispatcher.utter_message(
+                text="Nie podano kluczy dostępowych do api google."
+            )
+            return []
+        city = tracker.get_slot("city")
+        nomCity = wp.to_nominative(city)
+
+        try:
+            interesting_places = googleService.getInterestingPlace(nomCity)
+            dispatcher.utter_message(
+                "Oto lista artykułów z google z ciekawymi miejscami w mieście "
+                + nomCity
+            )
+            for i, place in enumerate(interesting_places):
+                dispatcher.utter_message(text=f"{i+1}. {place['title']} ")
+                dispatcher.utter_message(text=f"Link do artykułu: {place['url']}")
+                dispatcher.utter_message(text="")
+            return []
+        except Exception as e:
+            if len(e.args) > 1 and e.args[1] == "connectionError":
+                dispatcher.utter_message(
+                    text=f"Problem z połączeniem z serwerem Google. Spróbuj ponownie później."
+                )
+                return []
+
+            print(e)
+            dispatcher.utter_message(
+                text=f"Nie udało się pobrać danych o ciekawych miejscach w mieście {nomCity}"
+            )
+            return []
+        finally:
+            print(
+                "=" * 10 + " END of ActionGetInterestingPlace " + "=" * 10, end="\n\n"
+            )
 
 
 class ActionSetPrevCity(Action):

@@ -100,3 +100,22 @@ nlu:
       - Czy [Warszawa](city) ma więcej mieszkańców niż [Wrocław](city2)?
       - A czy [Zamość](city) ma większą populacje
       - A czy [Zamość](city) ma większą populacje niż [Bielsko-Biała](city2)
+
+  - intent: interesting_places
+    examples: |
+      - Co ciekawego jest w [Warszawie](city)
+      - Co warto zobaczyć w [Lublinie](city)
+      - Co ciekawego jest w [Krakowie](city)
+      - Co warto zobaczyć we [Wrocławiu](city)
+      - Co ciekawego jest w [Białymstoku](city)
+      - Co warto zobaczyć w [Gdańsku](city)
+      - Co ciekawego jest w [Bydgoszczy](city)
+      - Co warto zobaczyć w [Gdyni](city)
+      - Co ciekawego jest w [Kielcach](city)
+      - Co warto zobaczyć w [Olsztynie](city)
+      - Co ciekawego jest w [Opolu](city)
+      - Co warto zobaczyć w [Zamościu](city)
+      - Co ciekawego jest w [Bielsku-Białej](city)
+      - Co warto zobaczyć w [Katowicach](city)
+      - Co ciekawego jest w [Łodzi](city)
+      - Co warto zobaczyć w [Szczecinie](city)

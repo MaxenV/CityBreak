@@ -10,6 +10,7 @@ intents:
   - context_location
   - set_city
   - compare_population
+  - interesting_places
 
 entities:
   - city
@@ -74,3 +75,4 @@ actions:
   - action_answer_context
   - action_compare_population
   - action_set_prev_city
+  - action_interesting_places

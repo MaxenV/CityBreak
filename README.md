@@ -4,7 +4,8 @@ This project builds a chat application using the RASA framework to answer questi
 Application is still under development, it currently functions and will be expanded upon in the future.
 The chat use Docker for service delivery.
 Users can interact with the chat to ask about population figures or locations of Polish cities.
-The chat retrieves real-time information by querying GUS (Główny Urząd Statystyczny).
+User also can ask about interesting places in city.
+The chat retrieves real-time information by querying GUS (Główny Urząd Statystyczny) and Google search API.
 
 ## Example questions
 
@@ -13,6 +14,8 @@ The chat retrieves real-time information by querying GUS (Główny Urząd Statys
 - A gdzie on się znajduje
 - W jakim województwie znajduje się Łódź
 - Ilu ludzi mieszka w tym mieście
+- Co można tam zobaczyć
+- Co można zobaczyć w Zamościu
 
 # How to use
 
@@ -31,10 +34,14 @@ docker build -t local/citybreak .
 ### Run the Docker Container
 
 ```
-docker run -dt --rm -v ./app:/usr/src/app --name CityBreak local/citybreak
+docker run --rm -dt --env-file .env  -v ./app:/usr/src/app --name CityBreak local/citybreak
 ```
 
 This command runs a detached container named CityBreak, mounts the app directory from your local system to the /usr/src/app directory within the container, and assigns the name CityBreak to the container.
+
+#### API keys
+
+Without providing Google service keys, queries about interesting places in the city will be unavailable. Other queries about population and location will still function. Providing a GUS key is not required, but it will increase the number of possible queries.
 
 ## Run the Chat Interface
 
@@ -55,15 +62,7 @@ This command starts the RASA shell within the running container, allowing you to
 
 This functions will be append in next versions: <br>
 
-- Create webpage GUI and connect this caht as a service
-- Add API keys
-- Connect to google service for answer "what I can see in the city"
-- Create 2 versions of image: usable and develop
-- Based this image on scatch or else lighter version.
-
 - Development of a web interface (GUI) to provide a more user-friendly experience.
-- Integration of API keys for increase amount of queries to GUS.
-- Connection to Google services to provide information about attractions and points of interest within a city (e.g., "what can I see in the city?").
 - Creation of two Docker image variants:
   - A production-ready image optimized for usability.
   - A development image facilitating easier modification and debugging.

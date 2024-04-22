@@ -99,3 +99,11 @@ rules:
     steps:
       - intent: interesting_places
       - action: action_interesting_places
+
+  - rule: Show interesting places from context when city is not set
+    condition:
+      - slot_was_set:
+          - city: null
+    steps:
+      - intent: interesting_places
+      - action: utter_ask_city

@@ -88,3 +88,46 @@ nlu:
       - Gdzie jest to miasto
       - A gdzie to miasto jest
       - A gdzie znajduje się to miasto
+
+  - intent: compare_population
+    examples: |
+      - A czy to wiecej niż [Warszawa](city)
+      - Czy jest to więcej niż [Lublin](city)
+      - Czy jest to więcej niż [Kraków](city)
+      - Czy to wiecej czy mniej niż [Kielce](city)?
+      - A czy [Olsztyn](city) ma więcej mieszkańców?
+      - Czy [Opole](city) ma więcej ludzi niż [Warszawa](city2)?
+      - Czy [Warszawa](city) ma więcej mieszkańców niż [Wrocław](city2)?
+      - A czy [Zamość](city) ma większą populacje
+      - A czy [Zamość](city) ma większą populacje niż [Bielsko-Biała](city2)
+
+  - intent: interesting_places
+    examples: |
+      - Co ciekawego jest w [Warszawie](city)
+      - Co warto zobaczyć w [Lublinie](city)
+      - Co ciekawego jest w [Krakowie](city)
+      - Co warto zobaczyć we [Wrocławiu](city)
+      - Co ciekawego jest w [Białymstoku](city)
+      - Co warto zobaczyć w [Gdańsku](city)
+      - Co ciekawego jest w [Bydgoszczy](city)
+      - Co warto zobaczyć w [Gdyni](city)
+      - Co ciekawego jest w [Kielcach](city)
+      - Co warto zobaczyć w [Olsztynie](city)
+      - Co ciekawego jest w [Opolu](city)
+      - Co warto zobaczyć w [Zamościu](city)
+      - Co ciekawego jest w [Bielsku-Białej](city)
+      - Co warto zobaczyć w [Katowicach](city)
+      - Co ciekawego jest w [Łodzi](city)
+      - Co warto zobaczyć w [Szczecinie](city)
+      - Podaj najciekawsze miejsca w [Poznaniu](city)
+      - Podaj ciekawe miesca w [Gliwicach](city)
+      - Najciekawsze miejsca w [Radomiu](city)
+      - Co zobacze w [Tarnowie](city)
+      - Co mogę tam zwiedzić
+      - Co tam zobaczę
+      - Najciekawsze miejsca w tym mieście
+      - Co tam mogę zobaczyć
+      - Co ciekawego jest w tym mieście
+      - Co warto zobaczyć w tym mieście
+      - Co ciekawego tam znajdę
+      - Co warto zobaczyć tam
